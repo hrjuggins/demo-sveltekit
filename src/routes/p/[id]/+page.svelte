@@ -6,6 +6,8 @@
     Group,
     Space,
     Chip,
+    Paper,
+    Stack,
   } from "@svelteuidev/core";
   import {
     Star,
@@ -16,11 +18,10 @@
   } from "radix-icons-svelte";
   import Header from "$lib/components/Header.svelte";
   import { enhance } from "$app/forms";
-  import type { PageData } from "./$types";
-  export let data: PageData;
+  export let data: any;
   const { post } = data;
 
-  let isFavourite = post.favourite;
+  let isFavourite = post?.favourite;
 </script>
 
 <Header>
@@ -75,7 +76,7 @@
     <Text size="xl">{post.name}</Text>
     <Text size="md" weight="light">{post.location}</Text>
   </Group>
-  <ActionIcon size="lg" variant="outline">
+  <ActionIcon size="lg">
     <a href={post.mapLink}>
       <PaperPlane size={16} />
     </a>
@@ -93,11 +94,29 @@
   {/each}
 </Group>
 
-<!-- <form method="post" class="actions">
-      {#if !post.published}
-        <button formaction="?/publishPost">Publish</button>
-      {/if}
-      <button formaction="?/deletePost">Delete</button>
-    </form> -->
+<Space h="xl" />
+
+<Text size="xl">Places to eat</Text>
+<Space h="md" />
+
+<Stack spacing="xl">
+  {#each post.places as place (place.id)}
+    <Paper>
+      <Group direction="row" position="apart">
+        <Stack spacing='xs'>
+          <Text size="md" weight='bold'>{place.name}</Text>
+          <Text size="sm">{place.type}</Text>
+        </Stack>
+
+        <ActionIcon size="lg">
+          <a href={place.mapLink}>
+            <PaperPlane size={16} />
+          </a>
+        </ActionIcon>
+      </Group>
+    </Paper>
+  {/each}
+</Stack>
+
 <style>
 </style>

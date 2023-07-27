@@ -3,7 +3,6 @@
   import {
     TextInput,
     Button,
-    CheckboxGroup,
     Stack,
     Group,
     Title,
@@ -12,6 +11,7 @@
   } from "@svelteuidev/core";
   import Header from "$lib/components/Header.svelte";
   import Select from "svelte-select";
+  import { enhance } from "$app/forms";
 
   export let form: ActionData;
 
@@ -22,7 +22,7 @@
     value: feature.id,
   }));
 
-  const placesToEat = data.places.map(
+  let placesToEat = data.places.map(
     (place: { name: any; type: any; id: any }) => ({
       label: `${place.name} - ${place.type}`,
       value: place.id,
@@ -33,22 +33,30 @@
 
   const closeModal = () => (opened = false);
 
-  let filterText = '';
-  let value = null;
-  function handleFilter(e) {        
-        if (value?.find(i => i.label === filterText)) return;
-        if (e.detail.length === 0 && filterText.length > 0) {
-            const prev = features.filter((i) => !i.created);
-            features = [...prev, { value: filterText, label: filterText, created: true }];
-        }
+  let filterText = "";
+  let value: any[] | null = null;
+
+  function handleFilter(e: any) {
+    if (value?.find((i) => i.label === filterText)) return;
+    if (e.detail.length === 0 && filterText.length > 0) {
+      const prev = features.filter((i: any) => !i.created);
+      features = [
+        ...prev,
+        { value: filterText, label: filterText, created: true },
+      ];
     }
-    
-    function handleChange(e) {
-      features = features.map((i) => {
-            delete i.created;
-            return i;
-        });
-    }
+  }
+
+  function handleChange() {
+    features = features.map((i: any) => {
+      delete i.created;
+      return i;
+    });
+  }
+
+  let placeName = "";
+  let placeType = "";
+  let placeMapLink = "";
 </script>
 
 <Header />
@@ -74,15 +82,22 @@
       label="Paste the link"
       name="mapLink"
     />
-      <Text size="sm">Select features</Text>
+    <Text size="sm">Select features</Text>
 
-    <!-- <Select items={features} multiple name="features" /> -->
-    <Select on:change={handleChange} multiple on:filter={handleFilter} bind:filterText bind:value items={features } name="features">
+    <Select
+      on:change={handleChange}
+      multiple
+      on:filter={handleFilter}
+      bind:filterText
+      bind:value
+      items={features}
+      name="features"
+    >
       <div slot="item" let:item>
-          {item.created ? 'Add new: ' : ''}
-          {item.label}
+        {item.created ? "Add new: " : ""}
+        {item.label}
       </div>
-  </Select>
+    </Select>
     <Group direction="row" position="apart">
       <Text size="sm">Select places to eat</Text>
       <Button
@@ -93,10 +108,9 @@
         on:click={() => (opened = true)}>New</Button
       >
     </Group>
-    <Select items={placesToEat} multiple />
+    <Select items={placesToEat} multiple name="places" />
   </Stack>
 
-  <!-- <input class="hidden" id="file-to-upload" type="file" accept=".png,.jpg" /> -->
   <Group position="right">
     <a class="back" href="/"> or Cancel </a>
     <Button color="green" size="md" type="submit">Create</Button>
@@ -105,29 +119,49 @@
 
 <Modal
   centered
-  opened={opened}
+  {opened}
   size="xs"
   on:close={closeModal}
   title="Create a new feature"
 >
-    <form method="post" action="?/createPlace">
-      <Stack>
-        <TextInput placeholder="Place name" label="Name" name="name" />
-        <TextInput
-          placeholder="e.g Cafe, restaurant, pub..."
-          label="Type"
-          name="type"
-        />
-        <TextInput
-          placeholder="Paste map link here"
-          label="Google map link"
-          name="mapLink"
-        />
-        <Group position="right">
-          <Button color="green" size="sm" type="submit">Create</Button>
-        </Group>
-      </Stack>
-    </form>
+  <form
+    method="post"
+    action="?/createPlace"
+    use:enhance={() => {
+      closeModal();
+      placesToEat = [{ value: null, label: placeName }, ...placesToEat];
+      placeName = "";
+      placeType = "";
+      placeMapLink = "";
+      return async ({ update }) => {
+        await update();
+      };
+    }}
+  >
+    <Stack>
+      <TextInput
+        placeholder="Place name"
+        label="Name"
+        name="name"
+        bind:value={placeName}
+      />
+      <TextInput
+        placeholder="e.g Cafe, restaurant, pub..."
+        label="Type"
+        name="type"
+        bind:value={placeType}
+      />
+      <TextInput
+        placeholder="Paste map link here"
+        label="Google map link"
+        name="mapLink"
+        bind:value={placeMapLink}
+      />
+      <Group position="right">
+        <Button color="green" size="sm" type="submit">Create</Button>
+      </Group>
+    </Stack>
+  </form>
 </Modal>
 
 <style global>

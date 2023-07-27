@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { Text } from "@svelteuidev/core";
-  import type { PageData } from "./$types";
 
-  export let data: PageData;
+  export let data: any;
 </script>
 
 <a class="post" class:favourite={data.favourite} href='/p/{data.id}'>

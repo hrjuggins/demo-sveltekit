@@ -2,11 +2,10 @@
   import { Title } from "@svelteuidev/core";
 
   import Post from "$lib/components/Post.svelte";
-  import type { PageData } from "./$types";
 
-  export let posts: PageData;
+  export let posts: any;
 
-  posts.sort((a,b) => (a.id > b.id) ? -1 : 1)
+  posts.sort((a: any,b: any) => (a.id > b.id) ? -1 : 1)
 
 </script>
 

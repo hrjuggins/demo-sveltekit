@@ -19,9 +19,11 @@ export const actions = {
     let name = data.get("name");
     let location = data.get("location");
     let mapLink = data.get("mapLink");
-    let features = JSON.parse(data.get("features").toString());
+    let features = JSON.parse(data.get("features")!.valueOf().toString());
+    let places = JSON.parse(data.get("places")!.valueOf().toString());
 
     features = features.map((feature: { value: any }) => feature.value);
+    places = places.map((place: { value: any }) => place.value);
 
     if (!name || !location || !mapLink) {
       return fail(400, { name, missing: true });
@@ -42,8 +44,6 @@ export const actions = {
         mapLink,
         features: {
           connectOrCreate: features.map((feature: any) => {
-            console.log({ feature });
-
             return {
               where: {
                 id: typeof feature === "string" ? 9999999 : feature,
@@ -52,30 +52,15 @@ export const actions = {
             };
           }),
         },
+        places: {
+          connect: places.map((place: any) => ({ id: place })),
+        },
       },
     });
 
     throw redirect(303, `/`);
   },
-  createFeature: async ({ request }) => {
-    const data = await request.formData();
 
-    let name = data.get("name");
-
-    if (!name) {
-      return fail(400, { name, missing: true });
-    }
-
-    if (typeof name != "string") {
-      return fail(400, { incorrect: true });
-    }
-
-    await prisma.feature.create({
-      data: {
-        name,
-      },
-    });
-  },
   createPlace: async ({ request }) => {
     const data = await request.formData();
 
@@ -95,7 +80,7 @@ export const actions = {
       return fail(400, { incorrect: true });
     }
 
-    await prisma.place.create({
+    return await prisma.place.create({
       data: {
         name,
         type,

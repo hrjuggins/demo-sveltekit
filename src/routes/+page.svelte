@@ -2,7 +2,7 @@
 <script>
   // @ts-nocheck
 
-  import { Title, Button, ChipGroup, Space, Stack } from "@svelteuidev/core";
+  import { Title, Button, ChipGroup, Stack } from "@svelteuidev/core";
   import Header from "$lib/components/Header.svelte";
   import Post from "$lib/components/Post.svelte";
   import Favourites from "$lib/components/Favourites.svelte";
