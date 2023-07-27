@@ -13,12 +13,16 @@ export const load = (async ({ params: { id } }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-  toggleFavourite: async ({ params: { id } }) =>
-    await prisma.$queryRaw`
-      UPDATE Post
-      SET favourite = NOT favourite
-      WHERE id = ${Number(id)}
-    `,
+  toggleFavourite: async ({ params: { id } }) => {
+    const favourite = await prisma.post.findUnique({
+      where: { id: Number(id) },
+      select: { favourite: true },
+    });
+    await prisma.post.update({
+      where: { id: Number(id) },
+      data: { favourite: !favourite?.favourite },
+    });
+  },
 
   // 2.
   // publishPost: async ({ params: { id } }) => {
@@ -32,12 +36,11 @@ export const actions = {
   //   throw redirect(303, `/p/${id}`);
   // },
 
-  // // 3.
-  // deletePost: async ({ params: { id } }) => {
-  //   await prisma.post.delete({
-  //     where: { id: Number(id) },
-  //   });
+  deletePost: async ({ params: { id } }) => {
+    await prisma.post.delete({
+      where: { id: Number(id) },
+    });
 
-  //   throw redirect(303, "/");
-  // },
+    throw redirect(303, "/");
+  },
 } satisfies Actions;

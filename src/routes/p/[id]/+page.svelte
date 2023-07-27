@@ -53,9 +53,11 @@
     <ActionIcon size="lg" variant="outline">
       <Pencil1 size={16} />
     </ActionIcon>
-    <ActionIcon size="lg" variant="outline">
-      <Trash size={16} />
-    </ActionIcon>
+    <form method="post" class="actions">
+      <ActionIcon size="lg" variant="outline" formaction="?/deletePost">
+        <Trash size={16} />
+      </ActionIcon>
+    </form>
   </Group>
 </Header>
 
