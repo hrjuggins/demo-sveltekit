@@ -1,46 +1,36 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+  import { Affix, Title } from "@svelteuidev/core";
+  let scrollY = 0;
 </script>
 
-<nav>
-  <div class="left">
-    <a class:active={$page.url.pathname === '/'} href="/">Blog</a>
-    <a class:active={$page.url.pathname === '/drafts'} href="/drafts">Drafts</a>
-  </div>
-  <div class="right">
-    <a href="/signup">Signup</a>
-    <a href="/create">+ Create draft</a>
-  </div>
-</nav>
+<svelte:window on:scroll={() => (scrollY = window.scrollY)} />
+
+<Affix position={{ top: 0 }}>
+  <nav class:minimised={scrollY > 20}>
+    {#if scrollY < 20}
+      <a href="/">
+        <Title order={1}>Sunday drive</Title>
+      </a>
+    {/if}
+    <slot />
+  </nav>
+</Affix>
 
 <style>
   nav {
     display: flex;
-    padding: 2rem;
-    align-items: center;
+    padding: 2rem 1rem;
+    justify-content: space-between;
+    background-color: white;
+    width: 100vw;
+    transition: all 0.2s ease-in;
   }
-
+  .minimised {
+    padding: 1rem;
+    justify-content: flex-end;
+    background: none;
+  }
   a {
     text-decoration: none;
-    color: #000;
-    display: inline-block;
-  }
-
-  a + a {
-    margin-left: 1rem;
-  }
-
-  .active{
-    font-weight: bold;
-  }
-
-  .right {
-    margin-left: auto;
-  }
-
-  .right a {
-    border: 1px solid black;
-    padding: 0.5rem 1rem;
-    border-radius: 3px;
   }
 </style>

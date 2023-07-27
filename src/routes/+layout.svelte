@@ -1,15 +1,10 @@
 <script lang="ts">
-  import Header from "$lib/components/Header.svelte";
+  import { SvelteUIProvider, Container } from "@svelteuidev/core";
   import "$lib/styles/style.css";
 </script>
 
-<div class="layout">
-  <Header />
-  <slot />
-</div>
-
-<style>
-  .layout {
-    padding: 0 2rem;
-  }
-</style>
+<SvelteUIProvider>
+  <Container override={{ marginTop: 100 }}>
+    <slot />
+  </Container>
+</SvelteUIProvider>
