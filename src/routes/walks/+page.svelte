@@ -2,7 +2,7 @@
 <script>
   // @ts-nocheck
 
-  import { Title, Button, ChipGroup, Stack, Paper, Center } from "@svelteuidev/core";
+  import { Title, Button, ChipGroup, Stack, Paper, Center, Space } from "@svelteuidev/core";
   import Header from "$lib/components/Header.svelte";
   import Post from "$lib/components/Post.svelte";
   import Favourites from "$lib/components/Favourites.svelte";
@@ -31,37 +31,14 @@
 </script>
 
 <Header>
-  <!-- <Button color="teal" ripple href="/create">Create</Button> -->
+  <Button color="teal" ripple href="/walks/create">Create</Button>
 </Header>
 
-<Center>
-  <Stack spacing='xl'>
-    <a href='/walks'>
+<Stack spacing='xl'>
+  
+<Title order={1}>Walks</Title>
 
-      <Paper withBorder override={{height: 250, width: 300, display: 'grid', placeItems: 'center'}}>
-        <Title order={1}>Walks</Title>
-
-      </Paper>
-    </a>
-    
-    <a href='/places'>
-      <Paper withBorder override={{height: 250, width: 300, display: 'grid', placeItems: 'center'}}>
-
-        <Title order={1}>Food</Title>
-      </Paper>
-    </a>
-  </Stack>
-
-</Center>
-
-
-<style>
-  a {
-    text-decoration: none;
-  }
-</style>
-
-<!-- <Favourites posts={data.favourites} />
+<Favourites posts={data.favourites} />
 
 <Stack>
   <Title order={2}>All walks</Title>
@@ -75,4 +52,6 @@
   {#each filteredPosts as post (post.id)}
     <Post data={post} />
   {/each}
-</Stack> -->
+</Stack>
+</Stack>
+

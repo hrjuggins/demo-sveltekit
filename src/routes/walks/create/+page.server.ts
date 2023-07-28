@@ -13,17 +13,23 @@ export const load = (async () => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-  create: async ({ request }) => {
+  createOrUpdate: async ({ request }) => {
     const data = await request.formData();
 
     let name = data.get("name");
     let location = data.get("location");
     let mapLink = data.get("mapLink");
-    let features = JSON.parse(data.get("features")!.valueOf().toString());
-    let places = JSON.parse(data.get("places")!.valueOf().toString());
+    let features = data.get("features") ?? [];
+    let places = data.get("places") ?? [];
 
-    features = features.map((feature: { value: any }) => feature.value);
-    places = places.map((place: { value: any }) => place.value);
+    if (features) {
+      const featuresArray = JSON.parse(features.toString());
+      features = featuresArray.map((feature: { value: any }) => feature.value);
+    }
+    if (places) {
+      const placesArray = JSON.parse(places.toString());
+      places = placesArray.map((place: { value: any }) => place.value);
+    }
 
     if (!name || !location || !mapLink) {
       return fail(400, { name, missing: true });
@@ -58,7 +64,7 @@ export const actions = {
       },
     });
 
-    throw redirect(303, `/`);
+    throw redirect(303, `/walks`);
   },
 
   createPlace: async ({ request }) => {

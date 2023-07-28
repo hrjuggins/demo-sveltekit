@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { ActionData, PageData } from "./$types";
   import {
     TextInput,
     Button,
@@ -13,31 +12,37 @@
   import Select from "svelte-select";
   import { enhance } from "$app/forms";
 
-  export let form: ActionData;
+  export let post: any;
 
-  export let data: PageData;
+  export let form: any;
 
-  let features = data.features.map((feature: { name: any; id: any }) => ({
-    label: feature.name,
-    value: feature.id,
-  }));
+  export let features: any = [];
 
-  let placesToEat = data.places.map(
-    (place: { name: any; type: any; id: any }) => ({
-      label: `${place.name} - ${place.type}`,
-      value: place.id,
-    })
-  );
+  export let placesToEat: any;
 
   let opened = false;
 
   const closeModal = () => (opened = false);
 
   let filterText = "";
-  let value: any[] | null = null;
+  let value: any;
+
+  if (post) {
+    value = features.filter((i: any) =>
+      post.features.map((pf: any) => pf.id).includes(i.value)
+    );
+  }
+
+  let placeValue: any;
+
+  if (post) {
+    placeValue = placesToEat.filter((i: any) =>
+      post.places.map((pf: any) => pf.id).includes(i.value)
+    );
+  }
 
   function handleFilter(e: any) {
-    if (value?.find((i) => i.label === filterText)) return;
+    if (value?.find((i: any) => i.label === filterText)) return;
     if (e.detail.length === 0 && filterText.length > 0) {
       const prev = features.filter((i: any) => !i.created);
       features = [
@@ -61,7 +66,14 @@
 
 <Header />
 
-<form method="post" action="?/create">
+<form method="post" action="?/createOrUpdate" use:enhance={({data}) => {
+  if (post) {
+    data.set('id', post.id);
+  }
+  return async ({ update }) => {
+    await update();
+  };
+}}>
   {#if form?.missing}<p class="error">Missing field required!</p>{/if}
 
   <Stack
@@ -71,18 +83,25 @@
   >
     <Title order={3}>Add a new walk</Title>
 
-    <TextInput placeholder="Name this walk" label="Walk Name" name="name" />
+    <TextInput
+      placeholder="Name this walk"
+      label="Walk Name"
+      name="name"
+      value={post?.name}
+    />
     <TextInput
       placeholder="Where is the walk?"
       label="Location"
       name="location"
+      value={post?.location}
     />
     <TextInput
       placeholder="Google map link"
       label="Paste the link"
       name="mapLink"
+      value={post?.mapLink}
     />
-    <Text size="sm">Select features</Text>
+    <Text size="sm">Tags</Text>
 
     <Select
       on:change={handleChange}
@@ -92,6 +111,7 @@
       bind:value
       items={features}
       name="features"
+      placeholder="e.g Long, short, easy, hard..."
     >
       <div slot="item" let:item>
         {item.created ? "Add new: " : ""}
@@ -99,7 +119,7 @@
       </div>
     </Select>
     <Group direction="row" position="apart">
-      <Text size="sm">Select places to eat</Text>
+      <Text size="sm">Place to eat</Text>
       <Button
         variant="subtle"
         color="green"
@@ -108,12 +128,24 @@
         on:click={() => (opened = true)}>New</Button
       >
     </Group>
-    <Select items={placesToEat} multiple name="places" />
+    <Select
+      items={placesToEat}
+      multiple
+      name="places"
+      placeholder="Select places to eat nearby"
+      bind:value={placeValue}
+    />
   </Stack>
 
   <Group position="right">
-    <a class="back" href="/"> or Cancel </a>
-    <Button color="green" size="md" type="submit">Create</Button>
+    <a class="back" href="/walks"> or Cancel </a>
+    <Button color="green" size="md" type="submit">
+      {#if !!post}
+        Update
+      {:else}
+        Create
+      {/if}
+    </Button>
   </Group>
 </form>
 

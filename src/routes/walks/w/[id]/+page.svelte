@@ -51,7 +51,7 @@
       </ActionIcon>
     </form>
 
-    <ActionIcon size="lg" variant="outline">
+    <ActionIcon size="lg" variant="outline" href='{post.id}/edit' root='a'>
       <Pencil1 size={16} />
     </ActionIcon>
     <form method="post" class="actions">
@@ -101,6 +101,7 @@
 
 <Stack spacing="xl">
   {#each post.places as place (place.id)}
+  <a href='/places/p/{place.id}'>
     <Paper>
       <Group direction="row" position="apart">
         <Stack spacing='xs'>
@@ -115,6 +116,7 @@
         </ActionIcon>
       </Group>
     </Paper>
+  </a>
   {/each}
 </Stack>
 

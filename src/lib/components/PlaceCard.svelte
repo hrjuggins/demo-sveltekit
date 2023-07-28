@@ -1,13 +1,13 @@
 <script lang="ts">
   import { Text, Paper } from "@svelteuidev/core";
 
-  export let data: any;
+  export let place: any;
 </script>
 
-<a class="post" class:favourite={data.favourite} href="/walks/w/{data.id}">
+<a class="post" href="/places/p/{place.id}">
   <Paper>
-    <Text size="sm">{data.name}</Text>
-    <Text size="sm" color="gray">{data.location}</Text>
+    <Text size="sm">{place.name}</Text>
+    <Text size="sm" color="gray">{place.type}</Text>
   </Paper>
 </a>
 
@@ -30,12 +30,9 @@
     justify-content: flex-end;
   }
 
-  .favourite {
-    min-width: 80%;
-  }
-
   .post:hover {
     box-shadow: 1px 1px 3px #aaa;
     cursor: pointer;
   }
+
 </style>

@@ -41,6 +41,6 @@ export const actions = {
       where: { id: Number(id) },
     });
 
-    throw redirect(303, "/");
+    throw redirect(303, "/walks");
   },
 } satisfies Actions;

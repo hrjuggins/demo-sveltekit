@@ -5,8 +5,7 @@
 
   export let posts: any;
 
-  posts.sort((a: any,b: any) => (a.id > b.id) ? -1 : 1)
-
+  posts.sort((a: any, b: any) => (a.id > b.id ? -1 : 1));
 </script>
 
 <div class="favourites">
@@ -23,12 +22,17 @@
 </div>
 
 <style>
-  .favourites {
-    margin-bottom: 2rem;
-  }
   .favourites-list {
     display: flex;
     overflow-x: scroll;
     gap: 2rem;
+    padding: 1rem 0;
+  }
+  .favourites-list::-webkit-scrollbar {
+    display: none;
+  }
+  .favourites-list > a {
+    background-color: rgba(254, 249, 236, 1);
+    border: 1px solid rgba(241, 165, 75, 1);
   }
 </style>
