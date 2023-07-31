@@ -22,9 +22,7 @@ export const actions = {
     let features = data.get("features") as string;
     let places = data.get("places") as string;
 
-    const featuresArray = features
-      ? JSON.parse(features).map((feature: { value: any }) => feature.value)
-      : [];
+    const featuresArray = features ? JSON.parse(features) : [];
     const placesArray = places
       ? JSON.parse(places).map((place: { value: any }) => place.value)
       : [];
@@ -50,9 +48,9 @@ export const actions = {
           connectOrCreate: featuresArray.map((feature: any) => {
             return {
               where: {
-                id: typeof feature === "string" ? 9999999 : feature,
+                id: feature.value,
               },
-              create: { name: feature.toString() },
+              create: { name: feature.label },
             };
           }),
         },
