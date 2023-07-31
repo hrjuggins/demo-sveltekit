@@ -31,19 +31,20 @@ export const actions = {
     let name = data.get("name") as string;
     let location = data.get("location") as string;
     let mapLink = data.get("mapLink") as string;
-    let features = JSON.parse((data.get("features") as string) || "");
-    let places = JSON.parse(data.get("places") as string) || "";
+    let features = data.get("features") as string;
+    let places = data.get("places") as string;
 
-    if (features) {
-      features = features.map((feature: { value: any }) => feature.value);
-    }
-    if (places) {
-      places = places.map((place: { value: any }) => place.value);
-    }
+    const featuresArray = features
+      ? JSON.parse(features).map((feature: { label: any }) => feature.label)
+      : [];
+    const placesArray = places
+      ? JSON.parse(places).map((place: { value: any }) => place.value)
+      : [];
 
     // update post
     if (data.get("id")) {
       const id = data.get("id");
+
       await prisma.post.update({
         where: { id: Number(id) },
         data: {
@@ -51,17 +52,13 @@ export const actions = {
           location,
           mapLink,
           features: {
-            connectOrCreate: features.map((feature: any) => {
-              return {
-                where: {
-                  id: typeof feature === "string" ? 9999999 : feature,
-                },
-                create: { name: feature.toString() },
-              };
-            }),
+            deleteMany: {},
+            create: featuresArray.map((feature: any) => ({
+              name: feature.toString(),
+            })),
           },
           places: {
-            connect: places.map((place: any) => ({ id: place })),
+            connect: placesArray.map((place: any) => ({ id: place })),
           },
         },
       });

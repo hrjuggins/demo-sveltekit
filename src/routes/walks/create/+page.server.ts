@@ -16,20 +16,18 @@ export const actions = {
   createOrUpdate: async ({ request }) => {
     const data = await request.formData();
 
-    let name = data.get("name");
-    let location = data.get("location");
-    let mapLink = data.get("mapLink");
-    let features = data.get("features") ?? [];
-    let places = data.get("places") ?? [];
+    let name = data.get("name") as string;
+    let location = data.get("location") as string;
+    let mapLink = data.get("mapLink") as string;
+    let features = data.get("features") as string;
+    let places = data.get("places") as string;
 
-    if (features) {
-      const featuresArray = JSON.parse(features.toString());
-      features = featuresArray.map((feature: { value: any }) => feature.value);
-    }
-    if (places) {
-      const placesArray = JSON.parse(places.toString());
-      places = placesArray.map((place: { value: any }) => place.value);
-    }
+    const featuresArray = features
+      ? JSON.parse(features).map((feature: { value: any }) => feature.value)
+      : [];
+    const placesArray = places
+      ? JSON.parse(places).map((place: { value: any }) => place.value)
+      : [];
 
     if (!name || !location || !mapLink) {
       return fail(400, { name, missing: true });
@@ -49,7 +47,7 @@ export const actions = {
         location,
         mapLink,
         features: {
-          connectOrCreate: features.map((feature: any) => {
+          connectOrCreate: featuresArray.map((feature: any) => {
             return {
               where: {
                 id: typeof feature === "string" ? 9999999 : feature,
@@ -59,7 +57,7 @@ export const actions = {
           }),
         },
         places: {
-          connect: places.map((place: any) => ({ id: place })),
+          connect: placesArray.map((place: any) => ({ id: place })),
         },
       },
     });

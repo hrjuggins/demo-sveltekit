@@ -6,7 +6,6 @@
 
   export let data;
   const { place } = data;
-  console.log(place);
 </script>
 
 <Header>

@@ -17,7 +17,7 @@
   export let form: any;
 
   export let features: any = [];
-
+   
   export let placesToEat: any;
 
   let opened = false;
@@ -26,6 +26,7 @@
 
   let filterText = "";
   let value: any;
+
 
   if (post) {
     value = features.filter((i: any) =>
