@@ -34,9 +34,7 @@ export const actions = {
     let features = data.get("features") as string;
     let places = data.get("places") as string;
 
-    const featuresArray = features
-      ? JSON.parse(features).map((feature: { label: any }) => feature.label)
-      : [];
+    const featuresArray = features ? JSON.parse(features) : [];
     const placesArray = places
       ? JSON.parse(places).map((place: { value: any }) => place.value)
       : [];
@@ -52,12 +50,16 @@ export const actions = {
           location,
           mapLink,
           features: {
-            deleteMany: {},
-            create: featuresArray.map((feature: any) => ({
-              name: feature.toString(),
+            set: [],
+            connectOrCreate: featuresArray.map((feature: any) => ({
+              where: {
+                id: feature.value,
+              },
+              create: { name: feature.label },
             })),
           },
           places: {
+            set: [],
             connect: placesArray.map((place: any) => ({ id: place })),
           },
         },

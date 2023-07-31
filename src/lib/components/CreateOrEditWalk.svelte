@@ -48,7 +48,7 @@
       const prev = features.filter((i: any) => !i.created);
       features = [
         ...prev,
-        { value: filterText, label: filterText, created: true },
+        { value: 999999, label: filterText, created: true },
       ];
     }
   }
