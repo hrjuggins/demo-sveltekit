@@ -32,6 +32,8 @@
     backgroundPosition: "center 100px",
     paddingTop: 80,
   };
+
+  // https://dribbble.com/jen_bancino
   const pageStyles = [
     {
       backgroundImage: "/1.png",

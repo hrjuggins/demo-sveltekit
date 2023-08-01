@@ -14,7 +14,7 @@
 <a class="post" class:favourite={data.favourite} href="/walks/w/{data.id}">
   <Paper override={cardStyle}>
     <Text size="sm">{data.name}</Text>
-    <Text size="sm" color="white">{data.location}</Text>
+    <Text size="sm" color="gray">{data.location}</Text>
   </Paper>
 </a>
 

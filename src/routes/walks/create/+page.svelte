@@ -1,17 +1,7 @@
 <script lang="ts">
   import type { ActionData, PageData } from "./$types";
-  import {
-    TextInput,
-    Button,
-    Stack,
-    Group,
-    Title,
-    Text,
-    Modal,
-  } from "@svelteuidev/core";
+  import { Container } from "@svelteuidev/core";
   import Header from "$lib/components/Header.svelte";
-  import Select from "svelte-select";
-  import { enhance } from "$app/forms";
   import CreateOrEdit from "$lib/components/CreateOrEditWalk.svelte";
 
   export let form: ActionData;
@@ -29,17 +19,18 @@
       value: place.id,
     })
   );
-
+  const containerStyle = {
+    paddingTop: 100,
+    background: "#efe1c9",
+    minHeight: "100vh",
+  };
 </script>
 
-<Header />
+<Container override={containerStyle}>
+  <Header />
 
-<CreateOrEdit 
-  features={features}
-  placesToEat={placesToEat}
-  form={form}
-  post={null}
-/>
+  <CreateOrEdit {features} {placesToEat} {form} post={null} />
+</Container>
 
 <style global>
   .back {

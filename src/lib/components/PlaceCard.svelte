@@ -2,11 +2,17 @@
   import { Text, Paper } from "@svelteuidev/core";
 
   export let place: any;
-  
+  const cardStyle = {
+    borderRadius: 6,
+    border: "1px solid #333",
+    background: "#ffffff0f",
+    boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+    backdropFilter: "blur(3.3px)",
+  };
 </script>
 
 <a class="post" href="/places/p/{place.id}">
-  <Paper>
+  <Paper override={cardStyle}>
     <Text size="sm">{place.name}</Text>
     <Text size="sm" color="gray">{place.type}</Text>
   </Paper>

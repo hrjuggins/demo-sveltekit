@@ -1,15 +1,5 @@
 <script lang="ts">
-  import {
-    Image,
-    Text,
-    ActionIcon,
-    Group,
-    Space,
-    Chip,
-    Paper,
-    Stack,
-    Button,
-  } from "@svelteuidev/core";
+  import { Container } from "@svelteuidev/core";
   import {
     Star,
     StarFilled,
@@ -36,6 +26,13 @@
       value: place.id,
     })
   );
+  const containerStyle = {
+    paddingTop: 100,
+    background: "#efe1c9",
+    minHeight: "100vh",
+  };
 </script>
 
-<CreateOrEdit {features} {placesToEat} {form} {post} />
+<Container override={containerStyle}>
+  <CreateOrEdit {features} {placesToEat} {form} {post} />
+</Container>

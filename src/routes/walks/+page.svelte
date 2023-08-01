@@ -10,7 +10,7 @@
     Paper,
     Center,
     Space,
-    Container
+    Container,
   } from "@svelteuidev/core";
   import Header from "$lib/components/Header.svelte";
   import Post from "$lib/components/Post.svelte";
@@ -39,8 +39,10 @@
   }
 
   const containerStyle = {
-    marginTop: 100
-  }
+    paddingTop: 100,
+    background: "#efe1c9",
+    minHeight: "100vh",
+  };
 </script>
 
 <Container override={containerStyle}>
@@ -67,4 +69,3 @@
     </Stack>
   </Stack>
 </Container>
-
