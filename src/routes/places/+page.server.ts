@@ -4,7 +4,7 @@ import prisma from "$lib/prisma";
 import type { PageServerLoad } from "./$types";
 
 export const load = (async () => {
-  const places = await prisma.place.findMany();
+  const places = async () => await prisma.place.findMany();
 
-  return { places };
+  return { places: places() };
 }) satisfies PageServerLoad;

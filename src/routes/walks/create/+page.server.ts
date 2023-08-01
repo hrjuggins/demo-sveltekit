@@ -6,10 +6,10 @@ import type { Actions } from "./$types";
 import type { PageServerLoad } from "./$types";
 
 export const load = (async () => {
-  const features = await prisma.feature.findMany();
-  const places = await prisma.place.findMany();
+  const features = async () => await prisma.feature.findMany();
+  const places = async () => await prisma.place.findMany();
 
-  return { features, places };
+  return { features: features(), places: places() };
 }) satisfies PageServerLoad;
 
 export const actions = {

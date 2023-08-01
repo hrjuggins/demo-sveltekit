@@ -5,10 +5,11 @@ import { fail, redirect } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
 
 export const load = (async ({ params: { id } }) => {
-  const place = await prisma.place.findUnique({
-    where: { id: Number(id) },
-  });
-  return { place };
+  const place = async () =>
+    await prisma.place.findUnique({
+      where: { id: Number(id) },
+    });
+  return { place: place() };
 }) satisfies PageServerLoad;
 
 export const actions = {
