@@ -14,5 +14,5 @@ const newTheme = createTheme('newTheme', {
   <Container override={{ padding: 0 }}>
     <slot />
   </Container>
-  <Navigation />
+  <!-- <Navigation /> -->
 </SvelteUIProvider>

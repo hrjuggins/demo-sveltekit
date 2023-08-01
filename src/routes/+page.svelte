@@ -43,7 +43,7 @@
     ...cardStyle,
     height: 70,
     background: "#8ba07a",
-  }
+  };
 </script>
 
 <div class="home">
@@ -66,13 +66,10 @@
     </a>
     <a href="/walks/create">
       <Paper withBorder override={createCard}>
-        <Title order={2}
-          >Add a new walk</Title
-        >
+        <Title order={2}>Add a new walk</Title>
       </Paper>
     </a>
   </Stack>
- 
 </div>
 
 <!-- <Favourites posts={data.favourites} />
@@ -102,7 +99,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    padding-bottom: 110px;
+    padding-bottom: 70px;
   }
   a {
     text-decoration: none;
