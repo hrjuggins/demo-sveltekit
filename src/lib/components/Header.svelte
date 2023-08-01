@@ -1,6 +1,12 @@
 <script lang="ts">
   import { Affix, Title } from "@svelteuidev/core";
   let scrollY = 0;
+
+  const titleStyle = {
+    fontFamily: "Pacifico",
+    color: "#333",
+    textDecoration: "underline #8ba07a",
+  };
 </script>
 
 <svelte:window on:scroll={() => (scrollY = window.scrollY)} />
@@ -9,7 +15,7 @@
   <nav class:minimised={scrollY > 20}>
     {#if scrollY < 20}
       <a href="/">
-        <Title order={1}>Sunday drive</Title>
+        <Title order={1} override={titleStyle}>Sunday drive</Title>
       </a>
     {/if}
     <slot />
@@ -21,7 +27,6 @@
     display: flex;
     padding: 2rem 1rem;
     justify-content: space-between;
-    background-color: white;
     width: 100vw;
     transition: all 0.2s ease-in;
   }
@@ -29,8 +34,5 @@
     padding: 1rem;
     justify-content: flex-end;
     background: none;
-  }
-  a {
-    text-decoration: none;
   }
 </style>

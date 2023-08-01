@@ -1,10 +1,18 @@
 <script lang="ts">
-  import { SvelteUIProvider, Container } from "@svelteuidev/core";
+  import { SvelteUIProvider, Container, createTheme, useSvelteUITheme,  } from "@svelteuidev/core";
+  import Navigation from "$lib/components/Navigation.svelte";
   import "$lib/styles/style.css";
+const newTheme = createTheme('newTheme', {
+    ...useSvelteUITheme(),
+    fonts: {
+      standard: 'Quicksand'
+    }
+});
 </script>
 
-<SvelteUIProvider>
-  <Container override={{ marginTop: 100 }}>
+<SvelteUIProvider withNormalizeCSS withGlobalStyles class={newTheme}>
+  <Container override={{ padding: 0 }}>
     <slot />
   </Container>
+  <Navigation />
 </SvelteUIProvider>

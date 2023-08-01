@@ -23,6 +23,7 @@
     "prettier-plugin-svelte": "^2.8.1",
     "prisma": "^5.0.0",
     "svelte": "^3.54.0",
+    "svelte-awesome-icons": "^0.4.14",
     "svelte-check": "^2.9.2",
     "ts-node": "10.9.1",
     "tslib": "^2.4.1",
