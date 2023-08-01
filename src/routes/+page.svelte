@@ -2,7 +2,7 @@
 <script>
   // @ts-nocheck
 
-  import { Title, Stack, Paper } from "@svelteuidev/core";
+  import { Title, Stack, Paper, Image } from "@svelteuidev/core";
   import Header from "$lib/components/Header.svelte";
 
   const cardStyle = {
@@ -20,7 +20,12 @@
 
 <div class="home">
   <Header />
-  <Stack spacing="xl">
+
+  <Stack spacing="xl" align='center'>
+    <Image
+    src={'/outside.png'}
+    width="100%"
+  />
     <a href="/walks">
       <Paper withBorder override={cardStyle}>
         <Title order={1} override={{ fontFamily: "Pacifico, cursive" }}
@@ -41,16 +46,12 @@
 
 <style>
   .home {
-    background-image: url("/outside.png");
-    background-size: contain;
-    background-position: center 24px;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-end;
     padding-bottom: 160px;
+    background-color: #f2b553;
   }
   a {
     text-decoration: none;
