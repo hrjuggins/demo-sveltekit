@@ -2,6 +2,7 @@
   import { Text, Paper } from "@svelteuidev/core";
 
   export let place: any;
+  
 </script>
 
 <a class="post" href="/places/p/{place.id}">

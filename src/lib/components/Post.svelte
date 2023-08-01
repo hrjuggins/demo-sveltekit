@@ -2,12 +2,19 @@
   import { Text, Paper } from "@svelteuidev/core";
 
   export let data: any;
+  const cardStyle = {
+    borderRadius: 6,
+    border: "1px solid #333",
+    background: "#ffffff0f",
+    boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
+    backdropFilter: "blur(3.3px)",
+  };
 </script>
 
 <a class="post" class:favourite={data.favourite} href="/walks/w/{data.id}">
-  <Paper>
+  <Paper override={cardStyle}>
     <Text size="sm">{data.name}</Text>
-    <Text size="sm" color="gray">{data.location}</Text>
+    <Text size="sm" color="white">{data.location}</Text>
   </Paper>
 </a>
 
@@ -28,6 +35,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    scroll-snap-align: start;
   }
 
   .favourite {

@@ -26,7 +26,11 @@
     display: flex;
     overflow-x: scroll;
     gap: 2rem;
-    padding: 1rem 0;
+    padding: 1rem;
+    scroll-snap-type: mandatory;
+    scroll-snap-points-x: repeat(3rem);
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 4px;
   }
   .favourites-list::-webkit-scrollbar {
     display: none;

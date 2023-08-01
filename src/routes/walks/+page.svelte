@@ -2,7 +2,16 @@
 <script>
   // @ts-nocheck
 
-  import { Title, Button, ChipGroup, Stack, Paper, Center, Space } from "@svelteuidev/core";
+  import {
+    Title,
+    Button,
+    ChipGroup,
+    Stack,
+    Paper,
+    Center,
+    Space,
+    Container
+  } from "@svelteuidev/core";
   import Header from "$lib/components/Header.svelte";
   import Post from "$lib/components/Post.svelte";
   import Favourites from "$lib/components/Favourites.svelte";
@@ -28,30 +37,34 @@
       filteredPosts = data.allPosts;
     }
   }
+
+  const containerStyle = {
+    marginTop: 100
+  }
 </script>
 
-<Header>
-  <Button color="teal" ripple href="/walks/create">Create</Button>
-</Header>
+<Container override={containerStyle}>
+  <Header>
+    <Button color="teal" ripple href="/walks/create">Create</Button>
+  </Header>
 
-<Stack spacing='xl'>
-  
-<Title order={1}>Walks</Title>
+  <Stack spacing="xl">
+    <Title order={1}>Walks</Title>
 
-<Favourites posts={data.favourites} />
+    <Favourites posts={data.favourites} />
 
-<Stack>
-  <Title order={2}>All walks</Title>
-  <ChipGroup
-    color="teal"
-    size="sm"
-    items={features}
-    bind:value
-    on:change={handleFilter}
-  />
-  {#each filteredPosts as post (post.id)}
-    <Post data={post} />
-  {/each}
-</Stack>
-</Stack>
+    <Stack>
+      <Title order={2}>All walks</Title>
+      <ChipGroup
+        size="sm"
+        items={features}
+        bind:value
+        on:change={handleFilter}
+      />
+      {#each filteredPosts as post (post.id)}
+        <Post data={post} />
+      {/each}
+    </Stack>
+  </Stack>
+</Container>
 

@@ -11,7 +11,9 @@ const newTheme = createTheme('newTheme', {
 </script>
 
 <SvelteUIProvider withNormalizeCSS withGlobalStyles class={newTheme}>
-  <Container override={{ padding: 0 }}>
+  <Container override={{ padding: 0, 
+    minHeight: '100vh'
+   }}>
     <slot />
   </Container>
   <!-- <Navigation /> -->

@@ -16,6 +16,7 @@ body {
   font-size: 16px;
   font-family: "Quicksand", Arial, sans-serif;
   min-height: 100vh;
+  background-color: #f2b553;
 }
 
 input,
